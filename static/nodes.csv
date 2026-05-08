@@ -1,0 +1,936 @@
+Id,Label
+0,metabolic dysfunctionassociated steatotic liver disease
+1,fasciolosis
+2,hepatitis
+3,autoimmune hepatitis
+4,alcohol abuse
+5,fatty liver disease
+6,cirrhosis
+7,metabolic syndrome
+8,wilson disease
+9,alpha antitrypsin deficiency
+10,gilbert syndrome
+11,jaundice
+12,liver failure
+13,liver cancer
+14,cholangiocarcinoma
+15,angiosarcoma
+16,primary biliary cholangitis
+17,inflammation
+18,hepatic encephalopathy
+19,allergy
+20,cardiovascular disease
+21,edema
+22,ascites
+23,heart failure
+24,heart murmur
+25,hypertension
+26,diabetic retinopathy
+27,arthritis
+28,lupus
+29,dermatomyositis
+30,vasculitis
+31,janeway lesion
+32,peripheral artery disease
+33,congenital heart defect
+34,atherosclerosis
+35,aortic stenosis
+36,hypertrophic cardiomyopathy
+37,preeclampsia
+38,eclampsia
+39,stroke
+40,hypertensive encephalopathy
+41,arrhythmia
+42,lightheadedness
+43,syncope medicine
+44,chest pain
+45,cardiac arrest
+46,atrial fibrillation
+47,firstdegree atrioventricular block
+48,long qt syndrome
+49,ventricular fibrillation
+50,supraventricular tachycardia
+51,ventricular tachycardia
+52,coronary artery disease
+53,arteriosclerosis
+54,myocardial infarction
+55,unstable angina
+56,cardiogenic shock
+57,cardiomyopathy
+58,amyloid cardiomyopathy
+59,amyloidosis
+60,dilated cardiomyopathy
+61,chaga disease
+62,tuberculosis
+63,pregnancy
+64,tachycardiainduced cardiomyopathy
+65,eosinophilic granulomatosis with polyangiitis
+66,pulmonary heart disease
+67,mitral regurgitation
+68,pulmonary hypertension
+69,chronic obstructive pulmonary disease
+70,tetralogy of fallot
+71,myocarditis
+72,lyme disease
+73,sarcoidosis
+74,pericarditis
+75,constrictive pericarditis
+76,cardiac tamponade
+77,aortic regurgitation
+78,mitral valve prolapse
+79,mitral stenosis
+80,tricuspid regurgitation
+81,wolffparkinsonwhite syndrome
+82,infective endocarditis
+83,rheumatic fever
+84,libmansacks endocarditis
+85,noonan syndrome
+86,down syndrome
+87,atrial septal defect
+88,turner syndrome
+89,primary ciliary dyskinesia
+90,patent ductus arteriosus
+91,pulmonary valve stenosis
+92,aortic aneurysm
+93,abdominal aortic aneurysm
+94,marfan syndrome
+95,ehlersdanlos syndrome
+96,intracranial aneurysm
+97,subarachnoid hemorrhage
+98,aortic dissection
+99,aortic rupture
+100,deep vein thrombosis
+101,pulmonary embolism
+102,thrombus
+103,diabetic nephropathy
+104,varicose vein
+105,giant cell arteritis
+106,polymyalgia rheumatica
+107,rheumatoid arthritis
+108,syphilis
+109,behçets disease
+110,rapidly progressive glomerulonephritis
+111,kawasaki disease
+112,cyanide poisoning
+113,seizure
+114,achromatopsia
+115,hivaids
+116,alcoholism
+117,alzheimers disease
+118,amaurosis fugax
+119,al
+120,angelman syndrome
+121,asperger syndrome
+122,ataxia
+123,attention deficit hyperactivity disorder
+124,autism spectrum
+125,bell palsy
+126,bipolar disorder
+127,visual impairment
+128,head injury
+129,brain tumor
+130,capgras delusion
+131,carpal tunnel syndrome
+132,complex regional pain syndrome
+133,cadasil
+134,cerebral palsy
+135,charcotmarietooth disease
+136,myalgic encephalomyelitischronic fatigue syndrome
+137,chronic pain
+138,cluster headache
+139,coma
+140,complex posttraumatic stress disorder
+141,nerve compression syndrome
+142,color blindness
+143,cotards syndrome
+144,creutzfeldtjakob disease
+145,repetitive strain injury
+146,cushing syndrome
+147,cyclothymia
+148,dandywalker malformation
+149,subacute sclerosing panencephalitis
+150,dejerinesottas disease
+151,dementia
+152,developmental coordination disorder
+153,dizziness
+154,duchenne muscular dystrophy
+155,dysarthria
+156,dysautonomia
+157,dysphagia
+158,dysgraphia
+159,dyslexia
+160,empty sella syndrome
+161,encephalitis
+162,epilepsy
+163,exploding head syndrome
+164,fetal alcohol spectrum disorder
+165,fever
+166,guillainbarré syndrome
+167,fibromyalgia
+168,fragile x syndrome
+169,friedreichs ataxia
+170,generalized anxiety disorder
+171,gerstmann syndrome
+172,krabbe disease
+173,shingle
+174,hirschsprung disease
+175,tropical spastic paraparesis
+176,huntington disease
+177,hydrocephalus
+178,hypoxia medicine
+179,inclusion body myositis
+180,klippelfeil syndrome
+181,spinal muscular atrophy
+182,leschnyhan syndrome
+183,hernia
+184,lumbar spinal stenosis
+185,ménières disease
+186,meningitis
+187,metachromatic leukodystrophy
+188,microcephaly
+189,migraine
+190,concussion
+191,morvans syndrome
+192,moyamoya disease
+193,vascular dementia
+194,multiple sclerosis
+195,muscular dystrophy
+196,myasthenia gravis
+197,narcolepsy
+198,neurofibromatosis
+199,neuroleptic malignant syndrome
+200,peripheral neuropathy
+201,nonhour sleepwake disorder
+202,orthostatic hypotension
+203,pantothenate kinaseassociated neurodegeneration
+204,paresis
+205,parkinson disease
+206,polyneuropathy
+207,polio
+208,postherpetic neuralgia
+209,posttraumatic stress disorder
+210,postural orthostatic tachycardia syndrome
+211,praderwilli syndrome
+212,progressive supranuclear palsy
+213,idiopathic intracranial hypertension
+214,rabies
+215,restless leg syndrome
+216,rett syndrome
+217,reye syndrome
+218,savant syndrome
+219,sanfilippo syndrome
+220,sensory processing disorder
+221,shaken baby syndrome
+222,sjögren syndrome
+223,sleep apnea
+224,african trypanosomiasis
+225,spina bifida
+226,spinal and bulbar muscular atrophy
+227,stiffperson syndrome
+228,stuttering
+229,substance use disorder
+230,chronic traumatic encephalopathy
+231,tardive dyskinesia
+232,taysachs disease
+233,tetanus
+234,thoracic outlet syndrome
+235,trigeminal neuralgia
+236,tinnitus
+237,tourette syndrome
+238,bovine spongiform encephalopathy
+239,transverse myelitis
+240,traumatic brain injury
+241,trichotillomania
+242,vestibular schwannoma
+243,vertigo
+244,wernicke encephalopathy
+245,williams syndrome
+246,eating disorder
+247,agoraphobia
+248,panic disorder
+249,social anxiety disorder
+250,dissociative identity disorder
+251,dissociative amnesia
+252,depersonalizationderealization disorder
+253,major depressive disorder
+254,dysthymia
+255,premenstrual dysphoric disorder
+256,psychotic depression
+257,atypical depression
+258,postpartum depression
+259,melancholic depression
+260,bipolar i disorder
+261,posttraumatic embitterment disorder
+262,prolonged grief disorder
+263,social pragmatic communication disorder
+264,classic autism
+265,insomnia
+266,sleep deprivation
+267,night terror
+268,advanced sleep phase disorder
+269,delirium
+270,alcohol withdrawal syndrome
+271,cannabis use disorder
+272,opioid use disorder
+273,problem gambling
+274,video game addiction
+275,problematic social medium use
+276,pedophilia
+277,transvestic fetishism
+278,hypochondriasis
+279,somatization disorder
+280,conversion disorder
+281,factitious disorder imposed on another
+282,erectile dysfunction
+283,vaginismus
+284,anorexia nervosa
+285,binge eating disorder
+286,bulimia nervosa
+287,diabulimia
+288,intermittent explosive disorder
+289,oppositional defiant disorder
+290,conduct disorder
+291,antisocial personality disorder
+292,pyromania
+293,obsessivecompulsive disorder
+294,body integrity dysphoria
+295,hoarding disorder
+296,delusional disorder
+297,schizophrenia
+298,schizoaffective disorder
+299,psychosis
+300,paranoid personality disorder
+301,schizoid personality disorder
+302,schizotypal personality disorder
+303,borderline personality disorder
+304,histrionic personality disorder
+305,narcissistic personality disorder
+306,avoidant personality disorder
+307,dependent personality disorder
+308,obsessivecompulsive personality disorder
+309,passiveaggressive personality disorder
+310,sadistic personality disorder
+311,gender dysphoria
+312,catatonia
+313,spasmodic dysphonia
+314,laryngitis
+315,sexually transmitted infection
+316,chlamydia
+317,gonorrhea
+318,herpes
+319,human papillomavirus infection
+320,hepatitis b
+321,hepatitis c
+322,bacterial vaginosis
+323,scabies
+324,trichomoniasis
+325,amoebiasis
+326,cryptosporidiosis
+327,giardiasis
+328,hepatitis a
+329,shigellosis
+330,hepatitis e
+331,hepatitis d
+332,cervical cancer
+333,anal cancer
+334,vulvar cancer
+335,genital wart
+336,molluscum contagiosum
+337,pediculosis pubis
+338,pelvic inflammatory disease
+339,ectopic pregnancy
+340,teenage pregnancy
+341,zika fever
+342,burn
+343,diabetic foot infection
+344,avascular necrosis
+345,fibrodysplasia ossificans progressiva
+346,fibrous dysplasia of bone
+347,gout
+348,hypophosphatasia
+349,multiple myeloma
+350,osteitis fibrosa cystica
+351,osteogenesis imperfecta
+352,osteomyelitis
+353,osteopenia
+354,osteoporosis
+355,scoliosis
+356,knee effusion
+357,sesamoiditis
+358,aneurysmal bone cyst
+359,costochondritis
+360,slipping rib syndrome
+361,tietze syndrome
+362,leggcalvéperthes disease
+363,osgoodschlatter disease
+364,severs disease
+365,scheuermanns disease
+366,abdominal migraine
+367,bile acid malabsorption
+368,bowel obstruction
+369,campylobacteriosis
+370,cholera
+371,coeliac disease
+372,duodenal atresia
+373,gastrointestinal bleeding
+374,gastroparesis
+375,hematochezia
+376,indolent t cell lymphoproliferative disorder of the gastrointestinal tract
+377,intestinal varix
+378,lower gastrointestinal bleeding
+379,monomorphic epitheliotropic intestinal t cell lymphoma
+380,mucositis
+381,necrotizing enterocolitis
+382,pharyngitis
+383,protein losing enteropathy
+384,radiation enteropathy
+385,radiation proctitis
+386,stercoral ulcer
+387,superior mesenteric artery syndrome
+388,tropical sprue
+389,upper gastrointestinal bleeding
+390,q microdeletion syndrome
+391,acute proliferative glomerulonephritis
+392,adenine phosphoribosyltransferase deficiency
+393,autosomal recessive polycystic kidney disease
+394,chronic kidney disease
+395,epstein syndrome
+396,kidney cancer
+397,kidney stone disease
+398,lupus nephritis
+399,medullary cystic kidney disease
+400,milkalkali syndrome
+401,nephroptosis
+402,nephrotic syndrome
+403,page kidney
+404,phosphate nephropathy
+405,polycystic kidney disease
+406,pyelonephritis
+407,renal infarction
+408,renal papillary necrosis
+409,trench nephritis
+410,hypothyroidism
+411,rhabdomyolysis
+412,exercise intolerance
+413,diabetes
+414,hyperthyroidism
+415,hypoparathyroidism
+416,hypokalemia
+417,scurvy
+418,starvation
+419,cramp
+420,channelopathy
+421,hypotonia
+422,compartment syndrome
+423,pseudohypertrophy
+424,glycogen storage disease type v
+425,laminopathy
+426,myostatinrelated muscle hypertrophy
+427,strain injury
+428,acne cosmetica
+429,acne miliaris necrotica
+430,acne
+431,rosacea
+432,perioral dermatitis
+433,hidradenitis suppurativa
+434,tnf receptor associated periodic syndrome
+435,leukoplakia
+436,necrotizing gingivitis
+437,angular cheilitis
+438,cyclic neutropenia
+439,geographic tongue
+440,gingival enlargement
+441,aphthous stomatitis
+442,crohn disease
+443,vestibular papillomatosis
+444,alopecia areata
+445,bubble hair deformity
+446,gustatory hyperhidrosis
+447,prepubertal hypertrichosis
+448,shell nail syndrome
+449,subungual hematoma
+450,congenital generalized lipodystrophy
+451,poland syndrome
+452,branchial cleft cyst
+453,infantile hemangioma
+454,complement deficiency
+455,wrinkly skin syndrome
+456,kaposis sarcoma
+457,angiofibroma
+458,angioleiomyoma
+459,buschkeollendorff syndrome
+460,cellular angiofibroma
+461,dupuytrens contracture
+462,fibromatosis colli
+463,fibrous hamartoma of infancy
+464,fibrous papule of the nose
+465,ganglion cyst
+466,gardner fibroma
+467,giantcell fibroblastoma
+468,tenosynovial giant cell tumor
+469,hemangiopericytoma
+470,lipoma
+471,liposarcoma
+472,neuroblastoma
+473,pearly penile papule
+474,teratoma
+475,atopic dermatitis
+476,chemical burn
+477,hive
+478,irritant folliculitis
+479,urushiolinduced contact dermatitis
+480,dyshidrosis
+481,seborrhoeic dermatitis
+482,dandruff
+483,alezzandrini syndrome
+484,arsenic poisoning
+485,vitiligo
+486,lead poisoning
+487,pallisterkillian syndrome
+488,reticulate acropigmentation of kitamura
+489,allopurinol hypersensitivity syndrome
+490,druginduced urticaria
+491,stevensjohnson syndrome
+492,toxic epidermal necrolysis
+493,gangrene
+494,acromegaly
+495,addisons disease
+496,congenital adrenal hyperplasia
+497,another syndrome
+498,congenital iodine deficiency syndrome
+499,growth hormone deficiency
+500,hyperparathyroidism
+501,polycystic ovary syndrome
+502,eosinophilic cellulitis
+503,hypereosinophilic syndrome
+504,basalcell carcinoma
+505,cutaneous squamouscell carcinoma
+506,extramammary paget disease
+507,cyld cutaneous syndrome
+508,papillary hidradenoma
+509,blue nevus
+510,pilonidal disease
+511,porocarcinoma
+512,spiradenoma
+513,wart
+514,erythema gyratum repens
+515,acrodermatitis enteropathica
+516,albrights hereditary osteodystrophy
+517,autoimmune polyendocrine syndrome type
+518,cantú syndrome
+519,cartilagehair hypoplasia
+520,haileyhailey disease
+521,harlequintype ichthyosis
+522,heterochromia iridum
+523,ipex syndrome
+524,johansonblizzard syndrome
+525,kabuki syndrome
+526,klinefelter syndrome
+527,legius syndrome
+528,poem syndrome
+529,progeria
+530,rhizomelic chondrodysplasia punctata
+531,rud syndrome
+532,supernumerary nipplesuropathiesbeckers nevus syndrome
+533,xeroderma pigmentosum
+534,treacher collins syndrome
+535,african tick bite fever
+536,brucellosis
+537,bubonic plague
+538,catscratch disease
+539,cellulitis
+540,anthrax
+541,otitis externa
+542,boil
+543,gonococcemia
+544,hot tub folliculitis
+545,impetigo
+546,leptospirosis
+547,listeriosis
+548,ludwigs angina
+549,melioidosis
+550,meningococcal disease
+551,necrotizing fasciitis
+552,perianal cellulitis
+553,pitted keratolysis
+554,plague disease
+555,rocky mountain spotted fever
+556,salmonellosis
+557,scarlet fever
+558,toxic shock syndrome
+559,trench fever
+560,tularemia
+561,yaw
+562,aquarium granuloma
+563,buruli ulcer
+564,leprosy
+565,candidiasis
+566,vaginal yeast infection
+567,chronic mucocutaneous candidiasis
+568,congenital cutaneous candidiasis
+569,cryptococcosis
+570,mucormycosis
+571,eumycetoma
+572,blastomycosis
+573,onychomycosis
+574,otomycosis
+575,phaeohyphomycosis
+576,paracoccidioidomycosis
+577,sporotrichosis
+578,invasive candidiasis
+579,tinea cruris
+580,tinea faciei
+581,tinea manuum
+582,tinea nigra
+583,athlete foot
+584,bed bug
+585,arthropod bite and sting
+586,dracunculiasis
+587,echinococcosis
+588,lymphatic filariasis
+589,onchocerciasis
+590,pinworm infection
+591,gamasoidosis
+592,head louse infestation
+593,hookworm infection
+594,irukandji syndrome
+595,leishmaniasis
+596,pediculosis corporis
+597,pneumocystosis
+598,pulicosis
+599,scorpion sting
+600,snakebite
+601,toxoplasmosis
+602,trichinosis
+603,schistosomiasis
+604,butcher wart
+605,chikungunya
+606,dengue fever
+607,fifth disease
+608,genital herpes
+609,hand foot and mouth disease
+610,mpox
+611,infectious mononucleosis
+612,lassa fever
+613,measles
+614,plantar wart
+615,herpes zoster ophthalmicus
+616,cold sore
+617,progressive vaccinia
+618,chickenpox
+619,rift valley fever
+620,roseola
+621,rubella
+622,smallpox
+623,cachexia
+624,west nile fever
+625,hodgkin lymphoma
+626,bannayanrileyruvalcaba syndrome
+627,nevus of ito
+628,acral lentiginous melanoma
+629,mucosal melanoma
+630,melanoma
+631,uveal melanoma
+632,chronic multifocal langerhans cell histiocytosis
+633,levator ani syndrome
+634,common variable immunodeficiency
+635,digeorge syndrome
+636,nezelof syndrome
+637,whim syndrome
+638,xlinked lymphoproliferative disease
+639,folate deficiency
+640,pellagra
+641,vitamin k deficiency
+642,meesmann corneal dystrophy
+643,pityriasis rosea
+644,meleda disease
+645,gestational pemphigoid
+646,lichen simplex chronicus
+647,psoriasis
+648,betamannosidosis
+649,citrullinemia
+650,hunter syndrome
+651,hyaluronidase deficiency
+652,maroteauxlamy syndrome
+653,phenylketonuria
+654,scheie syndrome
+655,variegate porphyria
+656,polymorphous light eruption
+657,frostbite
+658,piezogenic papule
+659,trench foot
+660,acquired c esterase inhibitor deficiency
+661,anaphylaxis
+662,aquagenic urticaria
+663,autoimmune urticaria
+664,cholinergic urticaria
+665,hereditary angioedema
+666,capillary leak syndrome
+667,acute hemorrhagic edema of infancy
+668,arteriosclerosis obliterans
+669,blueberry muffin baby
+670,calciphylaxis
+671,disseminated intravascular coagulation
+672,hereditary hemorrhagic telangiectasia
+673,livedo reticularis
+674,livedoid vasculopathy
+675,paroxysmal hand hematoma
+676,raynaud syndrome
+677,thrombotic thrombocytopenic purpura
+678,abscess
+679,lymphadenopathy
+680,metal allergy
+681,topical steroid withdrawal
+682,chronic spontaneous urticaria
+683,hair loss
+684,capillaritis
+685,sickle cell disease
+686,thalassemia
+687,methemoglobinemia
+688,anemia
+689,irondeficiency anemia
+690,pernicious anemia
+691,congenital dyserythropoietic anemia
+692,glucosephosphate dehydrogenase deficiency
+693,pyruvate kinase deficiency
+694,aplastic anemia
+695,myelodysplastic syndrome
+696,agranulocytosis
+697,thrombosis
+698,haemophilia
+699,haemophilia a
+700,haemophilia b
+701,haemophilia c
+702,protein s deficiency
+703,lymphoma
+704,nonhodgkin lymphoma
+705,leukemia
+706,acute lymphoblastic leukemia
+707,chronic lymphocytic leukemia
+708,acute myeloid leukemia
+709,malaria
+710,alphathalassemia
+711,hemolyticuremic syndrome
+712,druginduced autoimmune hemolytic anemia
+713,sulfhemoglobinemia
+714,prothrombin ga
+715,essential thrombocythemia
+716,platelet storage pool deficiency
+717,nosebleed
+718,hemoptysis
+719,intracranial hemorrhage
+720,subconjunctival bleeding
+721,hemothorax
+722,hemarthrosis
+723,placenta praevia
+724,nuchal cord
+725,preterm birth
+726,pneumothorax
+727,vitamin k deficiency bleeding
+728,neonatal jaundice
+729,velamentous cord insertion
+730,gray baby syndrome
+731,miscarriage
+732,stillbirth
+733,cancer
+734,malnutrition
+735,mental disorder
+736,birth defect
+737,gastritis
+738,allergic rhinitis
+739,asthma
+740,food allergy
+741,milk allergy
+742,egg allergy
+743,peanut allergy
+744,graf disease
+745,serum sickness
+746,subacute bacterial endocarditis
+747,type diabetes
+748,hashimotos thyroiditis
+749,hypersensitivity pneumonitis
+750,allergic bronchopulmonary aspergillosis
+751,autoimmune disease
+752,breast cancer
+753,prostate cancer
+754,lung cancer
+755,pancreatic cancer
+756,colorectal cancer
+757,testicular cancer
+758,ovarian cancer
+759,retinoblastoma
+760,medulloblastoma
+761,ewing sarcoma
+762,pilocytic astrocytoma
+763,glioblastoma
+764,pheochromocytoma
+765,thyroid cancer
+766,appendix cancer
+767,duodenal cancer
+768,gallbladder cancer
+769,stomach cancer
+770,small intestine cancer
+771,bladder cancer
+772,endometrial cancer
+773,ovarian germ cell tumor
+774,urethral cancer
+775,esophageal cancer
+776,head and neck cancer
+777,oral cancer
+778,oropharyngeal cancer
+779,paranasal sinus and nasal cavity cancer
+780,biphenotypic acute leukaemia
+781,mesothelioma
+782,diphtheria
+783,whooping cough
+784,common cold
+785,bronchiolitis
+786,croup
+787,cystic fibrosis
+788,tooth decay
+789,influenza
+790,intussusception medical disorder
+791,mumps
+792,pneumonia
+793,rickets
+794,volvulus
+795,xerophthalmia
+796,gestational diabetes
+797,hypoglycemia
+798,tertiary hyperparathyroidism
+799,diabetes insipidus
+800,gigantism
+801,adrenal crisis
+802,hyperaldosteronism
+803,kallmann syndrome
+804,whipples triad
+805,congenital hyperinsulinism
+806,central diabetes insipidus
+807,syndrome of inappropriate antidiuretic hormone secretion
+808,adrenocorticotropic hormone deficiency
+809,myxedema coma
+810,endemic goitre
+811,primary aldosteronism
+812,apparent mineralocorticoid excess syndrome
+813,pseudohypoaldosteronism
+814,congenital adrenal hyperplasia due to hydroxylase deficiency
+815,βhydroxysteroid dehydrogenase iii deficiency
+816,sertoli cellonly syndrome
+817,hyperandrogenism
+818,laron syndrome
+819,aarskogscott syndrome
+820,abdallatdavisfarrage syndrome
+821,achardthiers syndrome
+822,aicardigoutières syndrome
+823,alice in wonderland syndrome
+824,andersentawil syndrome
+825,babesiosis
+826,baker cyst
+827,bankart lesion
+828,barretts esophagus
+829,barth syndrome
+830,becker muscular dystrophy
+831,ankylosing spondylitis
+832,bickerstaff brainstem encephalitis
+833,somatic symptom disorder
+834,brugada syndrome
+835,castleman disease
+836,chilaiditi syndrome
+837,erotomania
+838,glycogen storage disease type iii
+839,myotonic dystrophy
+840,da costa syndrome
+841,de quervain syndrome
+842,neuromyelitis optica spectrum disorder
+843,dubinjohnson syndrome
+844,trisomy
+845,ehrlichiosis
+846,emerydreifuss muscular dystrophy
+847,frey syndrome
+848,heydes syndrome
+849,kennycaffey syndrome
+850,lemierres syndrome
+851,oculocerebrorenal syndrome
+852,müllerian agenesis
+853,perlman syndrome
+854,potts disease
+855,rotor syndrome
+856,stargardt disease
+857,tattonbrownrahman syndrome
+858,distal myopathy
+859,stye
+860,dermatitis
+861,conjunctivitis
+862,scleritis
+863,corneal abrasion
+864,keratoconus
+865,dry eye syndrome
+866,uveitis
+867,sympathetic ophthalmia
+868,cataract
+869,myopia
+870,farsightedness
+871,presbyopia
+872,atrophy
+873,choroideremia
+874,macular degeneration
+875,retinitis pigmentosa
+876,glaucoma
+877,phthisis bulbi
+878,cysticercosis
+879,toxocariasis
+880,strabismus
+881,refractive error
+882,astigmatism
+883,anisometropia
+884,amblyopia
+885,leber congenital amaurosis
+886,microphthalmia
+887,fungal keratitis
+888,chalazion
+889,blepharitis
+890,pterygium eye
+891,episcleritis
+892,exposure keratopathy
+893,pellucid marginal degeneration
+894,corneal opacity
+895,arcus senilis
+896,polypoidal choroidal vasculopathy
+897,cytomegalovirus retinitis
+898,persistent fetal vasculature
+899,aniseikonia
+900,homonymous hemianopsia
+901,scintillating scotoma
+902,miosis
+903,trachoma
+904,streptococcal pharyngitis
+905,anorexia symptom
+906,perspiration
+907,urinary tract infection
+908,botulism
+909,typhoid fever
+910,paratyphoid fever
+911,yersiniosis
+912,legionnaire disease
+913,peptic ulcer disease
+914,neuroborreliosis
+915,mers
+916,sars
+917,covid
+918,gerstmannsträusslerscheinker syndrome
+919,fatal insomnia
+920,variably proteasesensitive prionopathy
+921,variant creutzfeldtjakob disease
+922,kuru disease
+923,chronic wasting disease
+924,dermatophytosis
+925,talaromycosis
+926,emmonsiosis
+927,basidiobolomycosis
+928,conidiobolomycosis
+929,paragonimiasis
+930,taeniasis
+931,ascariasis
+932,strongyloidiasis
+933,trichuriasis
+934,isosporiasis

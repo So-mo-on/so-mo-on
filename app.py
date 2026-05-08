@@ -1,12 +1,10 @@
-"""
-app.py — Flask Portfolio
-Run with: python app.py
-Then open http://127.0.0.1:8080
-"""
+
 
 from flask import Flask, render_template, request, jsonify
 import data
 import analytics
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 # ── Home / CV page ───────────────────────────────────────────────────

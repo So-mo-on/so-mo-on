@@ -1,19 +1,10 @@
-"""
-scinet.py — SciNet Backend
-===========================
-Two network types:
-  1. Co-authorship network
-  2. Paper similarity network (TF-IDF)
-
-Both include fields of study statistics.
-"""
-
 import re
 import math
 import requests
 import numpy as np
 import pandas as pd
 import networkx as nx
+import os
 from collections import Counter
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity

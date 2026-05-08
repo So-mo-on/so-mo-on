@@ -1,14 +1,4 @@
-"""
-data.py — YOUR PERSONAL CONTENT FILE.
-=========================================
-This is the main file you'll edit to update your website.
-No HTML knowledge needed — just edit the Python variables below!
-
-Tips:
-- Strings use regular quotes: "like this"
-- Lists use square brackets: ["item1", "item2"]
-- Dictionaries use curly braces: {"key": "value"}
-"""
+import os
 
 # ─────────────────────────────────────────────
 # BASIC INFO

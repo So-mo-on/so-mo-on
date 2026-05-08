@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+{% block title %}Network Explorer{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top:2rem;">
+  <h1 style="font-family:var(--font-serif); font-size:2rem; font-weight:600; margin-bottom:1rem;">
+    Symptom Network
+  </h1>
+
+<!-- Explanation + Disclaimer -->
+<p style="font-size:0.95rem; line-height:1.7; color:#444; margin-bottom:0.8rem;">
+    This interactive visualization represents relationships between diseases based on shared symptoms.
+    Each node corresponds to a disease, and two diseases are connected when they have one or more symptoms
+    in common. The strength of each connection reflects the degree of similarity, meaning how many symptoms
+    are shared between them.
+  </p>
+
+ <p style="font-size:0.95rem; line-height:1.7; color:#444; margin-bottom:0.8rem;">
+    To explore the network, search for a disease using the input field. The visualization will highlight
+    its connections, allowing you to see how it relates to other conditions based on symptom overlap.
+  </p>
+
+  <hr style="border:none; border-top:1px solid #e6d8c3; margin:0.8rem 0;">
+
+<p style="font-size:0.85rem; line-height:1.7; color:#777; margin-top:0.6rem;">
+  This visualization is intended for exploratory and educational purposes. It highlights patterns of
+  symptom similarity and does not represent clinical relationships or diagnoses. For medical concerns,
+  consulting a qualified healthcare professional is recommended.
+</p>
+
+
+  <!-- Search -->
+  <div style="display:flex; gap:0.5rem; align-items:center; margin-bottom:1rem;">
+    <input id="q" type="text" placeholder="Search a disease…"
+      style="padding:0.6rem 1rem; border:1px solid var(--border); border-radius:8px;
+             font-size:1rem; width:320px; outline:none; background:#fff; color:var(--text);"
+      autocomplete="off"/>
+    <button onclick="searchNode()"
+      style="padding:0.6rem 1.2rem; background:var(--accent); color:#fff;
+             border:none; border-radius:8px; font-size:1rem; cursor:pointer;">
+      Search
+    </button>
+    <span id="status" style="color:var(--muted); font-size:0.9rem;"></span>
+  </div>
+
+  <!-- Autocomplete -->
+  <div id="ac" style="position:relative; width:320px; margin-top:-0.5rem; margin-bottom:1rem;">
+    <div id="ac-list" style="display:none; position:absolute; background:#fff; border:1px solid var(--border);
+         border-radius:8px; width:100%; max-height:200px; overflow-y:auto; z-index:100; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+    </div>
+  </div>
+
+  <!-- Canvas -->
+  <div style="background:#fff; border:1px solid var(--border); border-radius:12px; overflow:hidden;">
+    <canvas id="c" width="800" height="560" style="width:100%; display:block; cursor:grab;"></canvas>
+  </div>
+
+
+ <p style="font-size:0.8rem; color:var(--muted); margin-top:0.5rem; font-family:var(--font-mono);">
+    🟥 searched &nbsp; 🟩 1st neighbours &nbsp; 🟦 2nd neighbours &nbsp;&nbsp; thicker lines = stronger similarity &nbsp;&nbsp; drag nodes to move · drag background to pan
+  </p>
+  <!-- Data source -->
+<p style="font-size:0.95rem; line-height:1.7; color:#444; margin-bottom:0.8rem;">
+    📊 <strong>Data source:</strong> Disease–symptom associations were collected by scraping
+    publicly available information from Wikipedia. You can find more details
+<a href="https://github.com/So-mo-on/SymptoNet-Network" target="_blank" style="color:#3b6ea5; text-decoration:underline;">
+here</a>.
+  </p>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+const canvas = document.getElementById("c");
+const ctx    = canvas.getContext("2d");
+let nodes = [], edges = [];
+let panX = 0, panY = 0;
+let draggingNode = null;
+let panDragging  = false;
+let lastX, lastY;
+let scale = 1;
+
+function initCanvas() {
+  canvas.width  = canvas.parentElement.offsetWidth || 800;
+  canvas.height = 560;
+  scale = canvas.width / 800;
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.translate(panX, panY);
+  ctx.scale(scale, scale);
+
+  for (const e of edges) {
+    if (!e.srcNode || !e.tgtNode) continue;
+    const w = e.weight !== undefined ? e.weight : 1.0;
+    ctx.beginPath();
+    ctx.moveTo(e.srcNode.x, e.srcNode.y);
+    ctx.lineTo(e.tgtNode.x, e.tgtNode.y);
+    ctx.strokeStyle = `rgba(100,140,100,${0.15 + w * 0.75})`;
+    ctx.lineWidth   = 0.5 + w * 3.5;
+    ctx.stroke();
+  }
+
+  for (const n of nodes) {
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.size, 0, Math.PI * 2);
+    ctx.fillStyle   = n.color;
+    ctx.strokeStyle = n === draggingNode ? "#333" : "rgba(0,0,0,0.15)";
+    ctx.lineWidth   = n === draggingNode ? 2 : 1;
+    ctx.fill();
+    ctx.stroke();
+    ctx.font = `${n.size > 12 ? 13 : 10}px Inter, sans-serif`;
+    ctx.fillStyle    = "#1e3440";
+    ctx.textAlign    = "center";
+    ctx.textBaseline = "top";
+    ctx.fillText(n.label, n.x, n.y + n.size + 3);
+  }
+  ctx.restore();
+}
+
+function canvasPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: (e.clientX - rect.left - panX) / scale,
+    y: (e.clientY - rect.top  - panY) / scale,
+  };
+}
+
+function nodeAt(x, y) {
+  for (let i = nodes.length - 1; i >= 0; i--) {
+    const n = nodes[i];
+    if (Math.hypot(x - n.x, y - n.y) <= n.size + 4) return n;
+  }
+  return null;
+}
+
+// edges now store node references directly — no coordinate matching needed
+function buildEdgeRefs() {
+  const byId = {};
+  for (const n of nodes) byId[n.id] = n;
+  for (const e of edges) {
+    e.srcNode = byId[e.src];
+    e.tgtNode = byId[e.tgt];
+  }
+}
+
+canvas.addEventListener("mousedown", e => {
+  const {x, y} = canvasPos(e);
+  draggingNode = nodeAt(x, y);
+  panDragging  = !draggingNode;
+  lastX = e.clientX; lastY = e.clientY;
+  canvas.style.cursor = "grabbing";
+});
+
+canvas.addEventListener("mousemove", e => {
+  const dx = e.clientX - lastX;
+  const dy = e.clientY - lastY;
+  lastX = e.clientX; lastY = e.clientY;
+  if (draggingNode) {
+    const ndx = dx / scale, ndy = dy / scale;
+    draggingNode.x += ndx;
+    draggingNode.y += ndy;
+    draw();
+  } else if (panDragging) {
+    panX += dx; panY += dy;
+    draw();
+  } else {
+    const {x, y} = canvasPos(e);
+    canvas.style.cursor = nodeAt(x, y) ? "pointer" : "grab";
+  }
+});
+
+canvas.addEventListener("mouseup",    () => { draggingNode = null; panDragging = false; canvas.style.cursor = "grab"; });
+canvas.addEventListener("mouseleave", () => { draggingNode = null; panDragging = false; });
+window.addEventListener("resize",     () => { if (nodes.length) draw(); });
+
+// ── Autocomplete ──────────────────────────────────────────────────
+let labels = [];
+fetch("/autocomplete").then(r => r.json()).then(l => { labels = l; });
+
+const input  = document.getElementById("q");
+const acList = document.getElementById("ac-list");
+
+input.addEventListener("input", () => {
+  const q = input.value.trim().toLowerCase();
+  acList.innerHTML = "";
+  if (!q) { acList.style.display = "none"; return; }
+  const hits = labels.filter(l => l.toLowerCase().includes(q)).slice(0, 10);
+  if (!hits.length) { acList.style.display = "none"; return; }
+  hits.forEach(label => {
+    const d = document.createElement("div");
+    d.textContent = label;
+    d.style = "padding:0.5rem 1rem; cursor:pointer; font-size:0.9rem;";
+    d.onmouseenter = () => d.style.background = "#f0f0f0";
+    d.onmouseleave = () => d.style.background = "";
+    d.onclick = () => { input.value = label; acList.style.display = "none"; searchNode(); };
+    acList.appendChild(d);
+  });
+  acList.style.display = "block";
+});
+
+input.addEventListener("keydown", e => { if (e.key === "Enter") { acList.style.display = "none"; searchNode(); } });
+document.addEventListener("click", e => { if (!e.target.closest("#ac") && e.target !== input) acList.style.display = "none"; });
+
+// ── Search ────────────────────────────────────────────────────────
+async function searchNode() {
+  const q = input.value.trim();
+  if (!q) return;
+  document.getElementById("status").textContent = "Searching…";
+
+  const res  = await fetch("/run-analytics", {
+    method:  "POST",
+    headers: {"Content-Type": "application/json"},
+    body:    JSON.stringify({data: q}),
+  });
+  const data = await res.json();
+
+  if (!data.success || data.result.error) {
+    document.getElementById("status").textContent = data.result?.error || data.error;
+    return;
+  }
+
+  const r = data.result;
+  nodes = r.nodes;
+  edges = r.edges;
+  panX  = 0; panY = 0;
+  buildEdgeRefs();
+  document.getElementById("status").textContent = `Showing: ${r.node_label}`;
+  initCanvas();
+  setTimeout(draw, 200);
+}
+</script>
+{% endblock %}

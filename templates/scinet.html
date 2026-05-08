@@ -1,0 +1,411 @@
+{% extends "base.html" %}
+{% block title %}SciNet{% endblock %}
+
+{% block extra_head %}
+<style>
+  .search-row { display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center; margin-bottom:1.5rem; }
+
+  .sci-input {
+    padding:0.65rem 1rem; border:1px solid var(--border); border-radius:8px;
+    font-size:0.95rem; background:#fff; color:var(--text); outline:none;
+    transition:border-color 0.2s;
+  }
+  .sci-input:focus { border-color:var(--accent); }
+
+  .run-btn {
+    padding:0.65rem 1.4rem; background:var(--accent); color:#fff;
+    border:none; border-radius:8px; font-size:0.95rem; font-weight:500;
+    cursor:pointer; transition:opacity 0.2s;
+  }
+  .run-btn:hover    { opacity:0.85; }
+  .run-btn:disabled { opacity:0.4; cursor:not-allowed; }
+
+  .error-msg { color:#b94a52; font-size:0.88rem; margin-top:0.5rem; display:none; }
+
+  .stats-row { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem; }
+  .stat-pill { font-family:var(--font-mono); font-size:0.78rem;
+               padding:0.25rem 0.75rem; border-radius:20px; font-weight:600; }
+  .pill-blue  { background:rgba(152,180,200,0.25); color:#4a7490; }
+  .pill-green { background:rgba(204,218,166,0.35); color:#545944; }
+  .pill-pink  { background:rgba(214,151,153,0.2);  color:#af5a68; }
+
+  .graph-box {
+    background:#fff; border:1px solid var(--border); border-radius:12px;
+    overflow:hidden; margin-bottom:1.5rem;
+  }
+  #sci-canvas { display:block; width:100%; cursor:grab; }
+  #sci-canvas:active { cursor:grabbing; }
+
+  .hint { font-size:0.78rem; font-family:var(--font-mono); color:var(--muted); margin-bottom:1rem; }
+
+  #sci-tooltip {
+    position:fixed; background:#1e3440; color:#fff;
+    padding:0.4rem 0.75rem; border-radius:6px; font-size:0.82rem;
+    pointer-events:none; display:none; z-index:999; max-width:280px; line-height:1.5;
+  }
+
+  .empty-state {
+    background:#fff; border:1px dashed var(--border); border-radius:12px;
+    height:380px; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:0.75rem;
+    color:var(--muted); margin-bottom:1.5rem;
+  }
+
+  /* Two-column stats layout */
+  .stats-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem;
+  }
+  @media (max-width:600px) { .stats-grid { grid-template-columns:1fr; } }
+
+  .stats-card {
+    background:#fff; border:1px solid var(--border); border-radius:10px; padding:1.2rem;
+  }
+  .stats-card h3 {
+    font-size:0.78rem; font-family:var(--font-mono); text-transform:uppercase;
+    letter-spacing:0.06em; color:var(--muted); margin-bottom:0.9rem;
+  }
+
+  .bar-wrap { margin-bottom:0.55rem; }
+  .bar-label { font-size:0.83rem; margin-bottom:0.18rem; color:var(--text); }
+  .bar-label span { color:var(--muted); font-size:0.75rem; }
+  .bar-bg   { background:var(--border); border-radius:4px; height:7px; }
+  .bar-fill { border-radius:4px; height:7px; transition:width 0.4s ease; }
+
+  /* Papers table */
+  .papers-table { width:100%; border-collapse:collapse; font-size:0.85rem; }
+  .papers-table th {
+    text-align:left; padding:0.5rem 0.75rem; font-family:var(--font-mono);
+    font-size:0.75rem; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--muted); border-bottom:2px solid var(--border);
+  }
+  .papers-table td   { padding:0.5rem 0.75rem; border-bottom:1px solid var(--border); }
+  .papers-table tr:last-child td { border-bottom:none; }
+  .papers-table a    { color:var(--accent); }
+
+  @keyframes spin { to { transform:rotate(360deg); } }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top:2rem; margin-bottom:1rem;">
+  <h1 style="font-family:var(--font-serif); font-size:2.2rem; font-weight:600; margin-bottom:0.4rem;">
+    SciNet
+  </h1>
+  <p style="color:var(--muted); max-width:640px; margin-bottom:1.5rem;">
+    Search for a scientific topic or researcher to explore the structure of its research landscape.
+    Choose between a <strong>co-authorship network</strong> (showing collaboration patterns)
+    and a <strong>paper similarity network</strong> (linking papers based on abstract content). Use values between 5-100 for the number of papers.
+  </p>
+
+  <!-- Controls -->
+  <div class="search-row">
+    <input id="sci-query" class="sci-input" type="text"
+           placeholder="e.g. machine learning, lupus, climate…"
+           style="width:280px;" autocomplete="off"/>
+
+    <!-- Network type toggle -->
+    <div style="display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+      <button id="btn-coauth" onclick="setNetType('coauthorship')"
+        style="padding:0.65rem 1rem; border:none; cursor:pointer; font-size:0.88rem;
+               font-weight:500; background:var(--accent); color:#fff; transition:background 0.2s;">
+        👥 Co-authorship
+      </button>
+      <button id="btn-sim" onclick="setNetType('similarity')"
+        style="padding:0.65rem 1rem; border:none; cursor:pointer; font-size:0.88rem;
+               font-weight:500; background:#fff; color:var(--muted); transition:background 0.2s;">
+        📄 Paper Similarity
+      </button>
+    </div>
+    <input type="hidden" id="net-type" value="coauthorship"/>
+
+    <input id="n-papers" class="sci-input" type="number"
+           value="" min="5" max="100" style="width:90px;" placeholder="# papers"/>
+
+    <button class="run-btn" id="run-btn" onclick="runScinet()">Build Network</button>
+  </div>
+  <p class="error-msg" id="error-msg"></p>
+</section>
+
+<!-- Empty state -->
+<div class="empty-state" id="empty-state">
+  <div style="font-size:2.5rem;opacity:0.3;">🔬</div>
+  <div>Search a topic to build a network</div>
+</div>
+
+<!-- Loading -->
+<div class="empty-state" id="loading-state" style="display:none;">
+  <div style="width:36px;height:36px;border:3px solid var(--border);
+              border-top-color:var(--accent);border-radius:50%;
+              animation:spin 0.8s linear infinite;"></div>
+  <div style="font-family:var(--font-mono);font-size:0.85rem;color:var(--muted);">
+    Fetching papers and building network…
+  </div>
+</div>
+
+<!-- Results -->
+<div id="results-section" style="display:none;">
+
+  <div class="stats-row">
+    <span class="stat-pill pill-blue"  id="stat-papers"></span>
+    <span class="stat-pill pill-green" id="stat-nodes"></span>
+    <span class="stat-pill pill-pink"  id="stat-edges"></span>
+  </div>
+
+  <p class="hint">
+    Thicker lines = stronger connection &nbsp;·&nbsp;
+    Larger nodes = more connections &nbsp;·&nbsp;
+    Drag nodes to move &nbsp;·&nbsp; Drag background to pan &nbsp;·&nbsp;
+    Hover for details
+  </p>
+
+  <div class="graph-box">
+    <canvas id="sci-canvas" height="560"></canvas>
+  </div>
+
+  <!-- Two-column: fields of study + top authors -->
+  <div class="stats-grid">
+
+    <div class="stats-card" id="fields-card" style="display:none;">
+      <h3>Fields of Study</h3>
+      <div id="fields-bars"></div>
+    </div>
+
+    <div class="stats-card" id="authors-card" style="display:none;">
+      <h3>Top Collaborators</h3>
+      <div id="authors-bars"></div>
+    </div>
+
+  </div>
+
+  <!-- Papers table -->
+  <div id="papers-section" style="display:none;">
+    <h2 class="section-title" style="font-size:1.2rem;">Papers Retrieved</h2>
+    <table class="papers-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Year</th>
+          <th>Citations</th>
+        </tr>
+      </thead>
+      <tbody id="papers-tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<div id="sci-tooltip"></div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// ── Canvas state ──────────────────────────────────────────────────────
+const canvas  = document.getElementById("sci-canvas");
+const ctx     = canvas.getContext("2d");
+const tooltip = document.getElementById("sci-tooltip");
+let nodes = [], edges = [], panX = 0, panY = 0, scale = 1;
+let dragging = false, draggingNode = null, lastX, lastY;
+
+function initCanvas() {
+  canvas.width  = canvas.parentElement.offsetWidth || 800;
+  canvas.height = 560;
+  scale = canvas.width / 800;
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.translate(panX, panY);
+  ctx.scale(scale, scale);
+
+  for (const e of edges) {
+    if (!e.srcNode || !e.tgtNode) continue;
+    const w = e.weight || 1;
+    ctx.beginPath();
+    ctx.moveTo(e.srcNode.x, e.srcNode.y);
+    ctx.lineTo(e.tgtNode.x, e.tgtNode.y);
+    ctx.strokeStyle = `rgba(100,140,100,${0.15 + w * 0.7})`;
+    ctx.lineWidth   = 0.5 + w * 3.5;
+    ctx.stroke();
+  }
+
+  for (const n of nodes) {
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.size, 0, Math.PI * 2);
+    ctx.fillStyle   = n.color;
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth   = 1.5;
+    ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle    = "#1e3440";
+    ctx.font         = `${Math.min(n.size, 11)}px Inter, sans-serif`;
+    ctx.textAlign    = "center";
+    ctx.textBaseline = "top";
+    ctx.fillText(n.label, n.x, n.y + n.size + 3);
+  }
+  ctx.restore();
+}
+
+function buildEdgeRefs() {
+  const byId = {};
+  for (const n of nodes) byId[n.id] = n;
+  for (const e of edges) { e.srcNode = byId[e.src]; e.tgtNode = byId[e.tgt]; }
+}
+
+function nodeAt(mx, my) {
+  const cx = (mx - panX) / scale, cy = (my - panY) / scale;
+  for (const n of nodes)
+    if (Math.hypot(n.x - cx, n.y - cy) <= n.size + 4) return n;
+  return null;
+}
+
+canvas.addEventListener("mousedown", e => {
+  const r = canvas.getBoundingClientRect();
+  const hit = nodeAt(e.clientX - r.left, e.clientY - r.top);
+  if (hit) { draggingNode = hit; }
+  else      { dragging = true; }
+  lastX = e.clientX; lastY = e.clientY;
+});
+
+canvas.addEventListener("mousemove", e => {
+  const dx = e.clientX - lastX, dy = e.clientY - lastY;
+  lastX = e.clientX; lastY = e.clientY;
+  if (draggingNode) { draggingNode.x += dx / scale; draggingNode.y += dy / scale; draw(); }
+  else if (dragging) { panX += dx; panY += dy; draw(); }
+
+  const r   = canvas.getBoundingClientRect();
+  const hit = nodeAt(e.clientX - r.left, e.clientY - r.top);
+  if (hit) {
+    canvas.style.cursor   = "pointer";
+    tooltip.style.display = "block";
+    tooltip.style.left    = (e.clientX + 14) + "px";
+    tooltip.style.top     = (e.clientY - 36) + "px";
+    tooltip.innerHTML     = `<b>${hit.full_title || hit.label}</b><br>Connections: ${hit.degree}` +
+      (hit.url ? `<br><a href="${hit.url}" target="_blank" style="color:#ccdaa6;">Open →</a>` : "");
+  } else {
+    canvas.style.cursor   = dragging ? "grabbing" : "grab";
+    tooltip.style.display = "none";
+  }
+});
+
+canvas.addEventListener("mouseup",    () => { dragging = false; draggingNode = null; });
+canvas.addEventListener("mouseleave", () => { dragging = false; draggingNode = null; tooltip.style.display = "none"; });
+window.addEventListener("resize",     () => { if (nodes.length) { initCanvas(); draw(); } });
+
+// ── Network type toggle ───────────────────────────────────────────────
+function setNetType(type) {
+  document.getElementById("net-type").value = type;
+  const ca = document.getElementById("btn-coauth");
+  const si = document.getElementById("btn-sim");
+  if (type === "coauthorship") {
+    ca.style.background = "var(--accent)"; ca.style.color = "#fff";
+    si.style.background = "#fff";          si.style.color = "var(--muted)";
+  } else {
+    si.style.background = "var(--accent)"; si.style.color = "#fff";
+    ca.style.background = "#fff";          ca.style.color = "var(--muted)";
+  }
+}
+
+// ── Bar chart helper ──────────────────────────────────────────────────
+function renderBars(containerId, items, barColor) {
+  const max = Math.max(...items.map(i => i.value));
+  document.getElementById(containerId).innerHTML = items.map(item => `
+    <div class="bar-wrap">
+      <div class="bar-label">${item.label} <span>(${item.value})</span></div>
+      <div class="bar-bg">
+        <div class="bar-fill" style="width:${(item.value/max*100).toFixed(1)}%;background:${barColor};"></div>
+      </div>
+    </div>`).join("");
+}
+
+// ── Run ───────────────────────────────────────────────────────────────
+async function runScinet() {
+  const query   = document.getElementById("sci-query").value.trim();
+  const netType = document.getElementById("net-type").value;
+  const n       = parseInt(document.getElementById("n-papers").value);
+  const btn     = document.getElementById("run-btn");
+  const errorMsg = document.getElementById("error-msg");
+
+  errorMsg.style.display = "none";
+  if (!query) { errorMsg.textContent = "Please enter a query."; errorMsg.style.display = "block"; return; }
+
+  document.getElementById("empty-state").style.display    = "none";
+  document.getElementById("results-section").style.display = "none";
+  document.getElementById("loading-state").style.display   = "flex";
+  btn.disabled = true; btn.textContent = "Building…";
+
+  try {
+    const res  = await fetch("/run-scinet", {
+      method:  "POST",
+      headers: {"Content-Type": "application/json"},
+      body:    JSON.stringify({query, network_type: netType, n}),
+    });
+    const data = await res.json();
+    document.getElementById("loading-state").style.display = "none";
+
+    if (!data.success || data.result.error) {
+      errorMsg.textContent   = data.result?.error || data.error;
+      errorMsg.style.display = "block";
+      document.getElementById("empty-state").style.display = "flex";
+      return;
+    }
+
+    const r = data.result;
+
+    // Stats pills
+    document.getElementById("stat-papers").textContent = `${r.paper_count} papers`;
+    document.getElementById("stat-nodes").textContent  = `${r.node_count} nodes`;
+    document.getElementById("stat-edges").textContent  = `${r.edge_count} edges`;
+
+    // Graph
+    nodes = r.nodes; edges = r.edges; panX = 0; panY = 0;
+    initCanvas(); buildEdgeRefs();
+    setTimeout(draw, 150);
+
+    // Fields of study
+    const fieldsCard = document.getElementById("fields-card");
+    if (r.fields_of_study && Object.keys(r.fields_of_study).length) {
+      fieldsCard.style.display = "block";
+      renderBars("fields-bars",
+        Object.entries(r.fields_of_study).map(([k,v]) => ({label:k, value:v})),
+        "#98b4c8");
+    } else {
+      fieldsCard.style.display = "none";
+    }
+
+    // Top authors (co-authorship only)
+    const authorsCard = document.getElementById("authors-card");
+    if (r.network_type === "coauthorship" && r.top_authors?.length) {
+      authorsCard.style.display = "block";
+      renderBars("authors-bars",
+        r.top_authors.map(a => ({label: a.name, value: a.collaborations})),
+        "var(--accent)");
+    } else {
+      authorsCard.style.display = "none";
+    }
+
+    // Papers table
+    document.getElementById("papers-section").style.display = "block";
+    document.getElementById("papers-tbody").innerHTML = r.papers.map(p => `
+      <tr>
+        <td><a href="${p.URL}" target="_blank">${p.Title}</a></td>
+        <td>${p.Year}</td>
+        <td>${p.Citations}</td>
+      </tr>`).join("");
+
+    document.getElementById("results-section").style.display = "block";
+
+  } catch(err) {
+    document.getElementById("loading-state").style.display = "none";
+    document.getElementById("empty-state").style.display   = "flex";
+    errorMsg.textContent   = "Error: " + err.message;
+    errorMsg.style.display = "block";
+  } finally {
+    btn.disabled = false; btn.textContent = "Build Network";
+  }
+}
+
+document.getElementById("sci-query").addEventListener("keydown",
+  e => { if (e.key === "Enter") runScinet(); });
+</script>
+{% endblock %}

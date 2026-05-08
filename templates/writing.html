@@ -1,0 +1,59 @@
+<!--
+  templates/writing.html — Papers & Essays Page
+  ══════════════════════════════════════════════
+  Displays your science writing for teenagers and essays.
+  Add papers in data.py under PAPERS.
+-->
+{% extends "base.html" %}
+{% block title %}Writing{% endblock %}
+
+{% block content %}
+
+  <!-- ══ HEADER ════════════════════════════════════════════════════ -->
+  <section class="section" style="padding-top:2rem;">
+    <h1 class="section-title" style="font-family:var(--font-serif); font-size:2.2rem; border:none;">
+      Writing &amp; <span>Essays</span>
+    </h1>
+    <p style="max-width:640px; color:var(--muted); line-height:1.8; margin-bottom:2rem;">
+      {{ writing_intro }}
+    </p>
+  </section>
+
+  <!-- ══ PAPERS LIST ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <h2 class="section-title">Articles &amp; Papers</h2>
+
+    {% for paper in papers %}
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:0.5rem;">
+          <div class="card-title" style="font-size:1.1rem;">{{ paper.title }}</div>
+          <div class="card-meta">{{ paper.year }}</div>
+        </div>
+
+        <div class="card-meta" style="color:var(--accent2);">{{ paper.venue }}</div>
+
+        <div class="card-desc" style="margin-top:0.4rem;">{{ paper.description }}</div>
+
+        <div class="tags">
+          {% for tag in paper.tags %}
+            <span class="tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+
+        {% if paper.link %}
+          <a class="btn" href="{{ paper.link }}" target="_blank">Read article →</a>
+        {% else %}
+          <span class="btn" style="opacity:0.4; cursor:default;">Link coming soon</span>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <!-- Show a message if there are no papers yet -->
+    {% if not papers %}
+      <p style="color:var(--muted); font-style:italic;">
+        No papers added yet. Add some in data.py under PAPERS!
+      </p>
+    {% endif %}
+  </section>
+
+{% endblock %}

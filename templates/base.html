@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!--
+  templates/base.html
+  ════════════════════
+  This is the "parent" template. All pages inherit from this.
+  It contains the navigation bar, shared styles, and page structure.
+
+  To change the site's look: edit the <style> section below.
+  Colors, fonts, spacing — all in one place.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ name }} — {% block title %}Portfolio{% endblock %}</title>
+
+  <!-- Google Font: elegant serif + clean mono pairing -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════
+       GLOBAL VARIABLES — change colors & fonts here
+    ═══════════════════════════════════════════════════ */
+    :root {
+      --bg:          #fefffc;   /* warm off-white background */
+      --surface:     #e5ebd1;   /* white cards */
+      --border:      #e0dbd4;   /* soft border */
+      --accent:      #75383a;   /* darker olive (readable on light) */
+      --accent2:     #545944;   /* darker pink */
+      --text:        #2e5366;   /* near-black text */
+      --muted:       #406c82;   /* warm grey */
+      --font-body:   'Inter', sans-serif;
+      --font-serif:  'Inter, sans-serif;
+      --font-mono:   'Inter', sans-serif;
+    }
+
+    /* ── Reset & base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; opacity: 0.85; }
+
+    /* ── Navigation ───────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(178, 203, 219,0.82);
+      backdrop-filter: blur(12px);
+      border-bottom: None;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 90px;
+    }
+    .nav-brand {
+      font-family: var(--font-mono);
+      font-size: 1.95rem;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); text-decoration: none; }
+
+    /* ── Page wrapper ─────────────────────────────── */
+    .page { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+
+    /* ── Section headings ─────────────────────────── */
+    .section { margin-bottom: 4rem; }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title span { color: var(--accent); }
+
+    /* ── Cards ────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--surface);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: var(--accent); }
+    .card-title { font-weight: 600; font-size: 1.05rem; margin-bottom: 0.25rem; }
+    .card-meta {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      margin-bottom: 0.6rem;
+    }
+    .card-desc { color: var(--muted); font-size: 0.93rem; }
+
+    /* ── Tags / badges ────────────────────────────── */
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(156,171,116,0.72);
+      color: var(--bg);
+      border: None;
+    }
+
+    /* ── Buttons ──────────────────────────────────── */
+    .btn {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.45rem 1rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+      background: rgba(156,171,116,0.72);
+      color: var(--bg);
+      border: None;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn:hover {
+      background: rgba(156,171,116,0.72);
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── Footer ───────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+    }
+  </style>
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+  <!-- ── Navigation bar ── -->
+  <nav>
+    <span class="nav-brand">{{ name }}</span>
+    <ul class="nav-links">
+      <li><a href="/"         class="{{ 'active' if request.path == '/' }}">CV</a></li>
+<!--      <li><a href="/writing"  class="{{ 'active' if request.path == '/writing' }}">Writing</a></li>-->
+      <li><a href="/analytics" class="{{ 'active' if request.path == '/analytics' }}">symptonet</a></li>
+      <li><a href="/scinet" class="{{ 'active' if request.path == '/scinet' }}">SciNet</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ── Page content (each child template fills this) ── -->
+  <main class="page">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    Built with Python + Flask · {{ name }}
+  </footer>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

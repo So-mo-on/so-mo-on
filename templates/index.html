@@ -1,0 +1,122 @@
+<!--
+  templates/index.html — CV / Home Page
+  ══════════════════════════════════════
+  Extends base.html. Shows: hero, skills, experience, projects, presentations.
+  All content comes from data.py via app.py — no need to edit this file
+  unless you want to change the HTML structure.
+-->
+{% extends "base.html" %}
+{% block title %}CV{% endblock %}
+
+{% block content %}
+
+  <!-- ══ HERO ══════════════════════════════════════════════════════ -->
+  <section class="section" style="padding-top:2rem;">
+    <h1 style="font-family: var(--font-serif); font-size:2.8rem; font-weight:600; line-height:1.2; margin-bottom:0.5rem;">
+      {{ name }}
+    </h1>
+    <p style="font-family:var(--font-mono); color:var(--accent); margin-bottom:1.5rem; font-size:0.95rem;">
+      {{ tagline }}
+    </p>
+    <p style="max-width:640px; color:var(--muted); line-height:1.8;">
+      {{ about }}
+    </p>
+
+    <!-- Contact links -->
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem;">
+      {% if contact.email %}
+        <a class="btn" href="mailto:{{ contact.email }}">✉ Email</a>
+      {% endif %}
+      {% if contact.linkedin %}
+        <a class="btn" href="{{ contact.linkedin }}" target="_blank">LinkedIn</a>
+      {% endif %}
+      {% if contact.github %}
+        <a class="btn" href="{{ contact.github }}" target="_blank">GitHub</a>
+      {% endif %}
+      {% if contact.twitter %}
+        <a class="btn" href="{{ contact.twitter }}" target="_blank">Twitter / X</a>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- ══ SKILLS ════════════════════════════════════════════════════ -->
+  <section class="section">
+    <h2 class="section-title">Skills</h2>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap:1rem;">
+      {% for group in skills %}
+        <div class="card">
+          <div class="card-title" style="color:var(--accent2);">{{ group.category }}</div>
+          <div class="tags" style="margin-top:0.5rem;">
+            {% for item in group.skills %}
+              <span class="tag">{{ item }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ══ WORK EXPERIENCE ═══════════════════════════════════════════ -->
+  <section class="section">
+    <h2 class="section-title">Work Experience</h2>
+
+    {% for job in experiences %}
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:0.5rem;">
+          <div class="card-title">{{ job.title }}</div>
+          <div class="card-meta">{{ job.period }}</div>
+        </div>
+        <div class="card-meta" style="color:var(--accent); margin-bottom:0.5rem;">{{ job.company }}</div>
+        <div class="card-desc">{{ job.description }}</div>
+<!--        <div class="card-desc">{{ job.description }}</div>-->
+
+        {% if job.tech %}
+          <div class="tags">
+            {% for t in job.tech %}
+              <span class="tag">{{ t }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </section>
+
+  <!-- ══ PROJECTS ══════════════════════════════════════════════════ -->
+  <section class="section">
+    <h2 class="section-title">Projects</h2>
+
+    {% for project in projects %}
+      <div class="card">
+        <div class="card-title">{{ project.title }}</div>
+        <div class="card-desc" style="margin-top:0.3rem;">{{ project.description }}</div>
+        <div class="tags">
+          {% for t in project.tech %}
+            <span class="tag">{{ t }}</span>
+          {% endfor %}
+        </div>
+        {% if project.link %}
+          <a class="btn" href="{{ project.link }}">{{ project.link_label }}</a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </section>
+
+  <!-- ══ PRESENTATIONS ═════════════════════════════════════════════ -->
+  <section class="section">
+    <h2 class="section-title">Presentations</h2>
+
+    {% for pres in presentations %}
+      <div class="card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <div class="card-title">{{ pres.title }}</div>
+          <div class="card-meta">{{ pres.event }} · {{ pres.year }}</div>
+        </div>
+        {% if pres.link %}
+          <a class="btn" href="{{ pres.link }}" target="_blank">Slides / Video →</a>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </section>
+
+{% endblock %}

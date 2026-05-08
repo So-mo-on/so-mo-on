@@ -6,3 +6,4 @@ networkx
 plotly
 scikit-learn
 requests
+gunicorn

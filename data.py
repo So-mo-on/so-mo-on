@@ -285,4 +285,4 @@ ANALYTICS_TOOL_INSTRUCTIONS = "Enter comma-separated numbers (e.g. 12, 45, 7, 88
 SCINET_TOOL_TITLE = "SciNet"
 SCINET_TOOL_DESCRIPTION = "Description of your SciNet tool here."
 
-SEMANTIC_SCHOLAR_API_KEY = "UchKWOJtVX7lXiHoQNW1a2794CU4fqet8f6DaFs0"
+SEMANTIC_SCHOLAR_API_KEY = os.getenv("API_KEY")

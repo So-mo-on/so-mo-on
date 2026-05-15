@@ -32,7 +32,7 @@ def writing():
         writing_intro=data.WRITING_INTRO,
     )
 # ── Analytics Tool page ──────────────────────────────────────────────
-@app.route("/analytics")
+@app.route("/symptonet")
 def analytics_page():
     return render_template(
         "analytics.html",
